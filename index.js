@@ -1,6 +1,6 @@
 var express = require('express');
 var exphbs = require('express-handlebars');
-
+var homeLogic = require('./src/home.logic');
 
 var app = express();
 
@@ -10,8 +10,10 @@ app.engine('hbs', exphbs({
   extname: '.hbs'
 }
 ));
-
 app.set('view engine', 'hbs');
+
+
+app.use(express.static(__dirname + '/public'))
 
 
 app.set('port', process.env.PORT || 3000);
@@ -23,8 +25,12 @@ app.get('/', function (req, res) {
   res.render('home');
 })
 
+
+const { getOneSentence } = homeLogic()
 app.get('/about', function (req, res) {
-  res.render('about');
+  res.render('about', {
+    sentence: getOneSentence()
+  });
 })
 
 // 定义了 404 页面
