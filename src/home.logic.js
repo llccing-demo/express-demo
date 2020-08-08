@@ -10,6 +10,19 @@ function getOneSentence() {
   return goodList[i]
 }
 
+const tours = [
+  {
+    id: 0,
+    name: '去旅行',
+    price: '0.00'
+  }, {
+    id: 1,
+    name: '去旅行，倒找你钱',
+    price: '-100.00'
+  }
+]
+
 module.exports = {
-  getOneSentence
+  getOneSentence,
+  tours
 }

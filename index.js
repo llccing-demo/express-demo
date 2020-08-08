@@ -1,6 +1,8 @@
 var express = require('express');
 var exphbs = require('express-handlebars');
-var { getOneSentence } = require('./src/home.logic');
+var bodyParser = require('body-parser')
+
+var { getOneSentence, tours } = require('./src/home.logic');
 
 var app = express();
 
@@ -14,7 +16,10 @@ app.set('view engine', 'hbs');
 
 
 app.use(express.static(__dirname + '/public'))
-
+// 这个处理 form 表单提交的内容
+app.use(bodyParser.urlencoded({ extended: false }))
+// 处理 json 格式的提交
+app.use(bodyParser.json())
 
 app.set('port', process.env.PORT || 3000);
 
@@ -29,6 +34,21 @@ app.get('/about', function (req, res) {
   res.render('about', {
     sentence: getOneSentence()
   });
+})
+
+app.get('/form', function (req, res) {
+  res.render('form')
+})
+
+app.post('/process-concact', function (req, res) {
+  const { pass, name } = req.body
+  console.log(`pass=`, pass)
+  console.log(`name=`, name)
+  res.render('form', { name, pass })
+})
+
+app.get('/api/tours', function (req, res) {
+  res.json(tours)
 })
 
 // 定义了 404 页面
