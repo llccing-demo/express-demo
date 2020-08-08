@@ -1,6 +1,6 @@
 var express = require('express');
 var exphbs = require('express-handlebars');
-var homeLogic = require('./src/home.logic');
+var { getOneSentence } = require('./src/home.logic');
 
 var app = express();
 
@@ -25,8 +25,6 @@ app.get('/', function (req, res) {
   res.render('home');
 })
 
-
-const { getOneSentence } = homeLogic()
 app.get('/about', function (req, res) {
   res.render('about', {
     sentence: getOneSentence()
