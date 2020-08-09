@@ -1,6 +1,7 @@
 var express = require('express');
 var exphbs = require('express-handlebars');
 var bodyParser = require('body-parser')
+var formidable = require('formidable')
 
 var { getOneSentence, tours } = require('./src/home.logic');
 
@@ -37,14 +38,34 @@ app.get('/about', function (req, res) {
 })
 
 app.get('/form', function (req, res) {
-  res.render('form')
+  res.render('form', { type: 'img', year: '2020', month: '08' })
 })
 
+app.get('/thank-you', function (req, res) {
+  res.render('thank-you')
+})
+
+// 处理类似登录的 formData 信息
 app.post('/process-concact', function (req, res) {
   const { pass, name } = req.body
   console.log(`pass=`, pass)
   console.log(`name=`, name)
   res.render('form', { name, pass })
+})
+
+// 处理文件上传
+app.post('/upload/:type/:year/:month', function (req, res, next) {
+  const form = new formidable.IncomingForm();
+  console.log(form)
+  form.parse(req, (err, fields, files) => {
+    console.log(fields)
+    if (err) {
+      res.json(err)
+      return;
+    }
+    console.log(files)
+    res.redirect(303, '/thank-you')
+  })
 })
 
 app.get('/api/tours', function (req, res) {

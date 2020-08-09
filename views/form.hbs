@@ -1,7 +1,8 @@
 <h1>
-  表单测试
+  表单功能
 </h1>
-
+<br>
+<h2>普通表单</h2>
 <form action="/process-concact" method="POST">
   <label for="">
     <input type="text" id="name" name="name" />
@@ -14,6 +15,40 @@
   <button>提交</button>
 </form>
 
-<h2>
+<p>
   hello，你刚刚提交的信息是 name={{name}}, pass={{pass}}
+</p>
+
+<br>
+
+<h2>
+  上传功能
 </h2>
+
+
+{{!-- 注意，一定不能缺少 enctype="multipart/form-data" --}}
+<form class="form-horizontal" enctype="multipart/form-data" action="/upload/{{type}}/{{year}}/{{month}}" method="POST">
+  {{type}}-{{year}}-{{month}}
+  <div class="form-group">
+    <label class="col-sm-2 control-label">姓名
+    </label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" id="name" name="name" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">照片
+    </label>
+    <div class="col-sm-4">
+      <input type="file" class="form-control" id="file" name="file" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-4">
+      <button type="submit" class="btn btn-primary">提交</button>
+    </div>
+  </div>
+
+</form>
