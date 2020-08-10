@@ -8,18 +8,22 @@ function sendMail() {
         SMTP：smtp.ym.163.com 默认端口：25
      */
     let transporter = nodemailer.createTransport({
-      host: 'smtp.ym.163.com',
+      // 普通版 smtp.163.com
+      // 企业版 smtp.ym.163.com，貌似不支持呀
+      host: 'smtp.163.com',
       // 465/994 secure; 25 not secure
-      port: 994,
+      port: 465,
       secure: true,
       auth: {
-        user: 'admin@llccing.cn',
-        pass: 'xxxx'
+        user: 'lcf33123@163.com',
+        // 此处需要使用 163 给的授权码
+        pass: 'xxx'
       }
     })
 
     let mailOptions = {
-      form: 'admin@llccing.cn',
+      // 这里注意拼写错误，not form
+      from: 'lcf33123@163.com',
       to: 'lcf33123@foxmail.com, lcf33123@gmail.com',
       subject: 'nodemailer 测试邮件',
       text: '我是测试的内容哦！',
