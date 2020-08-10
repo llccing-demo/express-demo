@@ -10,6 +10,7 @@ var FileStore = require('session-file-store')(expressSession)
 var { getOneSentence, tours } = require('./src/home.logic');
 var { cookieSecret } = require('./src/credentials');
 const credentials = require('./src/credentials');
+const { sendMail } = require('./src/email')
 
 var app = express();
 
@@ -109,6 +110,19 @@ app.post('/upload/:type/:year/:month', function (req, res, next) {
 
 app.get('/api/tours', function (req, res) {
   res.json(tours)
+})
+
+
+app.get('/email', function (req, res) {
+  res.render('email')
+})
+
+
+app.post('/email/send', function (req, res) {
+  sendMail()
+  res.json({
+    message: '开始发送！'
+  })
 })
 
 app.use(function (req, res, next) {
